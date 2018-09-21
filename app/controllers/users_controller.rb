@@ -65,32 +65,21 @@ class UsersController < ApplicationController
     end
   end
 
- def webhook
-      result = {}
+  def webhook
+      result = []
+      response = {}
       User.all.each do |user|
-          if user.age > 20
-            result["name"] = user.name
-            result["age"] = user.age
-            result["gender"] = user.gender
-            result["phone"] = user.phone
-            result["email"] = user.email
-          end
-      end
-      # binding.pry
+      result << user
+       end
+      response["users"] = result.as_json
       # url = URI.parse("http://localhost:3001/users/webhook")
       url = URI.parse("http://webhook-two-app.herokuapp.com/users/webhook")
-      # binding.pry
       headers = {"host" => "webhook-two-app" }
       req = Net::HTTP::Post.new(url.path)
-      # binding.pry
       req["Content-Type"] = "application/json"
-      # binding.pry
       req["Accept"] = "application/json"
-      # binding.pry
-      req.body = JSON.generate(result)
-      # binding.pry
+      req.body = JSON.generate(response)
       con = Net::HTTP.new(url.host, url.port)
-      # binding.pry
       res = con.start {|http| http.request(req) }
   end
 
