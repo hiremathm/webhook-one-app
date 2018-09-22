@@ -12,7 +12,7 @@ end
 group :production do 
   gem 'pg', '~> 0.20'
 end
-
+gem 'sidekiq'
 gem 'pry'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.7'
